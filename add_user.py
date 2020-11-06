@@ -20,7 +20,7 @@ def init_db():
 def insert_into_db(db_inst, fName, surname, registration, position, active=1):
   try:
     cursor = db_inst.cursor()
-    query = "INSERT into students (fName, surname, registration, position, active) VALUES ('{}', '{}', '{}', {}, {})".format(fName, surname, registration, position, active)
+    query = "INSERT into students (fName, surname, registration, fingerprint_position, active) VALUES ('{}', '{}', '{}', {}, {})".format(fName, surname, registration, position, active)
     cursor.execute(query)
     db_inst().commit()
     print('Insert Success')
