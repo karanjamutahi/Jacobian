@@ -5,7 +5,6 @@
 # When it eventually finds a finger it should scan the finger, get the position of the template and query it against a postgres database from where it should return a students reg.no and name
 # It should then print those on the LCD screen and a button press should clear the details and start the loop afresh. 
 
-
 from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
 
@@ -56,17 +55,34 @@ def create_table(db_instance):
     print("Error while connecting to DB", e)
   finally:
     db_instance.close()
-  
+
+def get_user_at_position(position):
+  pass
+
+def_enrol_finger():
+  pass
+
 def read_fingerprint(f):
+  print('Trying to read fingerprint')
   try:
-    f.readImage()
+    if (f.readImage()):
+      f.convertImage(0x01)
+      result = f.searchTemplate()
+      position = result[0]
+      print("Found finger at position {position}".format(position))
+      accuracy = result[1]
+      student = get_user_at_position(position)
+
+    else:
+      print("Didn't find finger")
+
   except Exception as e:
     print_lcd('Read Print: FAIL')
+    print(e)
 
 def setup():
-  #f = init_fingerprint_sensor()
+  f = init_fingerprint_sensor()
   db_inst = init_db()
-  create_table(db_inst)
   
 def loop():
   pass
