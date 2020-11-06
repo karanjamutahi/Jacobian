@@ -128,6 +128,7 @@ def loop():
     print('\n================{}===============\n'.format(firstName))
     print('\n================{}===============\n'.format(lastName))
     print('\n================{}===============\n'.format(registration))
+    
   time.sleep(0.3)
 
 setup()
