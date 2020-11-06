@@ -23,6 +23,7 @@ def insert_into_db(db_inst, fName, surname, registration, position, active=1):
     query = 'INSERT into students (fName, surname, registration, position, active) VALUES ({}, {}, {}, {}, {})'.format(fName, surname, registration, position, active)
     cursor.execute(query)
     db_inst().commit()
+    print('Insert Success')
     cursor.close()
   except db.Error as error:
     print_lcd("Insert Failed")
