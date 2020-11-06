@@ -8,18 +8,22 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
 import time
+
 #Global Vars
 #db_active = false
+fingerprint = None
 
 def print_lcd(message):
   print(message)
 
 def init_fingerprint_sensor():
+  print_lcd('Init Fingerprint')
   try:
     f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
     if (f.verifyPassword() == False):
        print_lcd('Wrong Sensor Password')
        raise Exception('Wrong Sensor Password')
+    print_lcd('Init Success')
     return f 
   except Exception as e:
     print_lcd('Sensor Init Failed')
@@ -31,6 +35,7 @@ def init_db():
     db_conn = db.connect('student_fingerprint.db')
     cursor = db_conn.cursor()
     cursor.close()
+    print_lcd('Init Success')
     return db_conn
   except db.Error as error:
    print_lcd('DB Init failed')
@@ -59,7 +64,7 @@ def create_table(db_instance):
 def get_user_at_position(position):
   pass
 
-def_enrol_finger():
+def enrol_finger():
   pass
 
 def read_fingerprint(f):
@@ -81,11 +86,12 @@ def read_fingerprint(f):
     print(e)
 
 def setup():
-  f = init_fingerprint_sensor()
+  global fingerprint
+  fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
   
 def loop():
-  pass
+  read_fingerprint(fingerprint)
 
 setup()
 while 1:
