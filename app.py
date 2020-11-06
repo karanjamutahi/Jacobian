@@ -12,6 +12,7 @@ import time
 #Global Vars
 #db_active = false
 fingerprint = None
+db_inst = None
 
 def print_lcd(message):
   print(message)
@@ -84,21 +85,40 @@ def read_fingerprint(f):
     print(e)
     time.sleep(1)
 
-def read_fingerprint_and_fetch(f):
+def fetch_from_db_with_position(db_inst, position):
+  query = 'SELECT * FROM students WHERE position = {}'.format(position)
+  cursor = db_inst.cursor()
+  cursor.execute(query)
+  results = cursor.fetchone()
+  print(results)
+
+def insert_into_db(db_inst, fName, surname, registration, position, active=1):
+  try:
+    cursor = db_inst.cursor()
+    query = 'INSERT into students (fName, surname, registration, position, active) VALUES ({}, {}, {}, {}, {})'.format(fName, surname, registration, position, active)
+    cursor.execute(query)
+    db_inst().commit()
+    cursor.close()
+  except db.Error as error:
+    print_lcd("Insert Failed")
+    print(error)
+
+def read_fingerprint_and_fetch(f, db_inst):
   position = read_fingerprint(f)
   if position is None:
     print("Read Failed")
     return
+  fetch_from_db_with_position(db_inst, position)
   
   print("FOUND FINGER AT POSITION 3 {}".format(position))
-
 def setup():
   global fingerprint
+  global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
   
 def loop():
-  read_fingerprint_and_fetch(fingerprint)
+  read_fingerprint_and_fetch(fingerprint, db_inst)
   time.sleep(0.3)
 
 setup()
