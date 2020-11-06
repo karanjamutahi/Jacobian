@@ -122,13 +122,18 @@ def loop():
   position = read_fingerprint(fingerprint)
   if position is not None:
     result = fetch_from_db_with_position(db_inst, position)
-    firstName = result[1]
-    lastName = result[2]
-    registration = result[3]
-    print('\n================{}===============\n'.format(firstName))
-    print('\n================{}===============\n'.format(lastName))
-    print('\n================{}===============\n'.format(registration))
-    
+    if result is not None:
+      firstName = result[1]
+      lastName = result[2]
+      registration = result[3]
+      print('Found at position {}'.format(position))
+      print('\n================{}===============\n'.format(firstName))
+      print('\n================{}===============\n'.format(lastName))
+      print('\n================{}===============\n'.format(registration))
+      print_lcd("{} {}\n{}".format(firstName, lastName, format))
+    else:
+      print("Result is None")
+
   time.sleep(0.3)
 
 setup()
