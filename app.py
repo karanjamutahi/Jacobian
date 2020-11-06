@@ -86,7 +86,7 @@ def read_fingerprint(f):
     time.sleep(1)
 
 def fetch_from_db_with_position(db_inst, position):
-  query = 'SELECT * FROM students WHERE position = {}'.format(position)
+  query = 'SELECT * FROM students WHERE fingerprint_position = {}'.format(position)
   cursor = db_inst.cursor()
   cursor.execute(query)
   results = cursor.fetchone()
