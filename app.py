@@ -91,13 +91,14 @@ def fetch_from_db_with_position(db_inst, position):
   cursor.execute(query)
   results = cursor.fetchone()
   print(results)
+  return results
 
 def insert_into_db(db_inst, fName, surname, registration, position, active=1):
   try:
     cursor = db_inst.cursor()
-    query = 'INSERT into students (fName, surname, registration, position, active) VALUES ({}, {}, {}, {}, {})'.format(fName, surname, registration, position, active)
+    query = "INSERT into students (fName, surname, registration, fingerprint_position, active) VALUES ('{}', '{}', '{}', {}, {})".format(fName, surname, registration, position, active)
     cursor.execute(query)
-    db_inst().commit()
+    db_inst.commit()
     cursor.close()
   except db.Error as error:
     print_lcd("Insert Failed")
@@ -109,8 +110,8 @@ def read_fingerprint_and_fetch(f, db_inst):
     print("Read Failed")
     return
   fetch_from_db_with_position(db_inst, position)
-  
   print("FOUND FINGER AT POSITION 3 {}".format(position))
+
 def setup():
   global fingerprint
   global db_inst
@@ -118,7 +119,9 @@ def setup():
   db_inst = init_db()
   
 def loop():
-  read_fingerprint_and_fetch(fingerprint, db_inst)
+  position = read_fingerprint(fingerprint)
+  if position is not None:
+    results = fetch_from_db_with_position(db_inst, position)
   time.sleep(0.3)
 
 setup()
