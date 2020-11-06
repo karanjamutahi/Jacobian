@@ -90,7 +90,7 @@ def read_fingerprint_and_fetch(f):
     print("Read Failed")
     return
   
-  print("Found finger at position {position}".format(position))
+  print("FOUND FINGER AT POSITION 3 {}".format(position))
 
 def setup():
   global fingerprint
