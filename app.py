@@ -131,7 +131,8 @@ def loop():
       print('\n================{}===============\n'.format(firstName))
       print('\n================{}===============\n'.format(lastName))
       print('\n================{}===============\n'.format(registration))
-      print_lcd("{} {}\n{}".format(firstName, lastName, format))
+      print_lcd("{} {}\n{}".format(firstName, lastName, registration))
+      print("Waiting for Finger....")
     else:
       print("Result is None")
 
