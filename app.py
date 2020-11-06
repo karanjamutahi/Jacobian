@@ -74,16 +74,23 @@ def read_fingerprint(f):
       f.convertImage(0x01)
       result = f.searchTemplate()
       position = result[0]
-      print("Found finger at position {position}".format(position))
-      accuracy = result[1]
-      student = get_user_at_position(position)
-
+      return position
     else:
       print("Didn't find finger")
+      return None
 
   except Exception as e:
     print_lcd('Read Print: FAIL')
     print(e)
+    time.sleep(1)
+
+def read_fingerprint_and_fetch(f):
+  position = read_fingerprint(f)
+  if position is None:
+    print("Read Failed")
+    return
+  
+  print("Found finger at position {position}".format(position))
 
 def setup():
   global fingerprint
@@ -91,9 +98,9 @@ def setup():
   db_inst = init_db()
   
 def loop():
-  read_fingerprint(fingerprint)
+  read_fingerprint_and_fetch(fingerprint)
+  time.sleep(0.3)
 
 setup()
 while 1:
   loop()
-  time.sleep(0.3)
