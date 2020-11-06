@@ -69,7 +69,7 @@ def enrol_finger():
   pass
 
 def read_fingerprint(f):
-  print('Trying to read fingerprint')
+  #print('Trying to read fingerprint')
   try:
     if (f.readImage()):
       f.convertImage(0x01)
@@ -77,7 +77,7 @@ def read_fingerprint(f):
       position = result[0]
       return position
     else:
-      print("Didn't find finger")
+      #print("Didn't find finger")
       return None
 
   except Exception as e:
@@ -117,7 +117,8 @@ def setup():
   global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
-  
+  print('Waiting for finger . . .')
+
 def loop():
   position = read_fingerprint(fingerprint)
   if position is not None:
