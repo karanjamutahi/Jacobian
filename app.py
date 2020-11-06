@@ -7,7 +7,7 @@
 
 from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
-
+import time
 #Global Vars
 #db_active = false
 
@@ -88,5 +88,6 @@ def loop():
   pass
 
 setup()
-#while 1:
-#  loop()
+while 1:
+  loop()
+  time.sleep(0.3)
