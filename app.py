@@ -6,23 +6,23 @@
 # It should then print those on the LCD screen and a button press should clear the details and start the loop afresh. 
 
 
-from pyfingerprint.pyfingerprint import Pyfingerprint
+from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
 
 #Global Vars
-db_active = false
+#db_active = false
 
 def print_lcd(message):
   print(message)
 
 def init_fingerprint_sensor():
   try:
-    f = Pyfingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
+    f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
     if (f.verifyPassword() == False):
        print_lcd('Wrong Sensor Password')
        raise Exception('Wrong Sensor Password')
     return f 
- except Exception as e:
+  except Exception as e:
     print_lcd('Sensor Init Failed')
     exit()
 
@@ -64,7 +64,7 @@ def read_fingerprint(f):
     print_lcd('Read Print: FAIL')
 
 def setup():
-  f = init_fingerprint_sensor()
+  #f = init_fingerprint_sensor()
   db_inst = init_db()
   create_table(db_inst)
   
@@ -72,5 +72,5 @@ def loop():
   pass
 
 setup()
-while 1:
-  loop()
+#while 1:
+#  loop()
