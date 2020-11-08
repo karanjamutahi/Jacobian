@@ -145,6 +145,7 @@ def loop():
       print("Waiting for Finger....")
     else:
       print("Result is None")
+      print_lcd("Print not found")
 
   sleep(0.3)
 
