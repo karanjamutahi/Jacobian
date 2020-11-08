@@ -112,14 +112,17 @@ class lcd:
    def lcd_print(self, message):
       #print stuff
       self.lcd_write(0x80)
+      self.lcd_display_string(message, 1)
 
       #get message length
 
       #populating 20X4 buffer with message
+      '''
       for p in range(4):
          for q in range(20):
            # self.buffer[p][q] = 
            print("Jacobian")
+           '''
 
 
     #clear lcd and set to home

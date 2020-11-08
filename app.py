@@ -7,8 +7,11 @@
 
 from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
-import time
+from time import *
 import lcddriver
+
+lcd = lcddriver.lcd()
+lcd.lcd_clear()
 
 #Global Vars
 #db_active = false
@@ -17,8 +20,12 @@ db_inst = None
 
 def print_lcd(message):
   #20X4 buffer
-  #
+  #pass message to lcd_print
+  lcd.lcd_print(message)
+  lcd.lcd_clear()
+  lcd.lcd_display_string(message, 1)
   print(message)
+
 
 def init_fingerprint_sensor():
   print_lcd('Init Fingerprint')
