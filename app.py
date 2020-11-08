@@ -23,8 +23,6 @@ def print_lcd(message):
   #20X4 buffer
   #pass message to lcd_print
   lcd.lcd_print(message)
-  lcd.lcd_clear()
-  lcd.lcd_display_string(message, 1)
   print(message)
 
 
@@ -94,7 +92,7 @@ def read_fingerprint(f):
   except Exception as e:
     print_lcd('Read Print: FAIL')
     print(e)
-    time.sleep(1)
+    sleep(1)
 
 def fetch_from_db_with_position(db_inst, position):
   query = 'SELECT * FROM students WHERE fingerprint_position = {}'.format(position)
