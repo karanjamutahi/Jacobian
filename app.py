@@ -91,7 +91,7 @@ def read_fingerprint(f):
       return None
 
   except Exception as e:
-    print_lcd('Read Print: FAIL')
+    print_lcd('Read Print: FAIL Try Again')
     print(e)
     sleep(1)
 
