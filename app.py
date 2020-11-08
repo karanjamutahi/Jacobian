@@ -22,6 +22,7 @@ db_inst = None
 def print_lcd(message):
   #20X4 buffer
   #pass message to lcd_print
+  lcd.lcd_clear()
   lcd.lcd_print(message)
   print(message)
 
