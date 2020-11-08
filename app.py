@@ -9,6 +9,7 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
 from time import *
 import lcddriver
+from time import sleep
 
 lcd = lcddriver.lcd()
 lcd.lcd_clear()
@@ -146,7 +147,7 @@ def loop():
     else:
       print("Result is None")
 
-  time.sleep(0.3)
+  sleep(0.3)
 
 setup()
 while 1:
