@@ -10,7 +10,7 @@ import sqlite3 as db
 from time import *
 import lcddriver
 from time import sleep
-import Rpi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 lcd = lcddriver.lcd()
 lcd.lcd_clear()
