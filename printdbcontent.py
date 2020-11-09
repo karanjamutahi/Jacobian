@@ -8,4 +8,5 @@ with con:
     rows = cur.fetchall()
 
     for row in rows:
-        print(row)
+        for place in row:
+            print(place)
