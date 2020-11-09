@@ -10,9 +10,14 @@ import sqlite3 as db
 from time import *
 import lcddriver
 from time import sleep
+import Rpi.GPIO as GPIO
 
 lcd = lcddriver.lcd()
 lcd.lcd_clear()
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 #Global Vars
 #db_active = false
@@ -152,3 +157,6 @@ def loop():
 setup()
 while 1:
   loop()
+  if GPIO.input(16) == GPIO.LOW:
+    print("Pin is active")
+
