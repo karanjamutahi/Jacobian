@@ -80,7 +80,8 @@ def create_table(db_instance):
 def get_user_at_position(position):
   pass
 
-def enrol_finger():
+def enrol_finger(f):
+  
   pass
 
 def read_fingerprint(f):
