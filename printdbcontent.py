@@ -13,3 +13,4 @@ with con:
         for place in row:
             content = content + " " + str(place)
         print(content)
+	content = ""
