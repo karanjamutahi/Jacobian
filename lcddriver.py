@@ -111,12 +111,7 @@ class lcd:
          self.lcd_write(ord(char), Rs)
 
    def lcd_print(self, message):
-      #print stuff
-     # self.lcd_write(0x80)
-      #self.lcd_display_string(message, 1)
-      #Read Print: FAIL Try Again
       strLen = len(message)
-
       token1 = ""
       token2 = ""
       token3 = ""
@@ -124,10 +119,6 @@ class lcd:
 
       token1 =  message[0:strLen]
       self.lcd_display_string(token1, 1)
-
-      if strLen <= 16:
-          #poulate first token, send for print
-          print("Less or equal")
                    
       if strLen > 16:
           #populate second token
@@ -140,8 +131,7 @@ class lcd:
          
       if strLen > 48:
           token4 = message[48:strLen]
-          self.lcd_display_string(token4, 4)
-          
+          self.lcd_display_string(token4, 4)          
 
       #get message length
 
