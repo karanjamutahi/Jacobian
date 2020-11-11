@@ -163,11 +163,10 @@ while 1:
     if enroll == True:
       enroll = False
       #proceed to enrolling students
-      print("Enrolling students")
+      print("Enroll Mode")
 
     elif enroll == False:
       enroll = True
+      print("Search Mode")
       loop()
-      
-    print("Pin is active")
 
