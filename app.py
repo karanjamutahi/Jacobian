@@ -102,7 +102,7 @@ def enrol_finger(f):
 
       if ( positionNumber >= 0 ):
           print('Template already exists at position #' + str(positionNumber))
-          exit(0)
+          return
 
       print('Remove finger...')
       print_lcd("Remove Finger")
