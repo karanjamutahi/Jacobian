@@ -141,7 +141,7 @@ def enrol_finger(f):
       #exit(1)
 
 def read_fingerprint(f):
-  #print('Trying to read fingerprint')
+  print('Trying to read fingerprint')
   try:
     if (f.readImage()):
       f.convertImage(0x01)
