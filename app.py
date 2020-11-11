@@ -43,7 +43,7 @@ def init_fingerprint_sensor():
     print_lcd('Init Success')
     return f 
   except Exception as e:
-    print_lcd('Sensor Init Failed')
+    print_lcd('Fingerprint Fail')
     exit()
 
 def init_db():
@@ -87,7 +87,7 @@ def enrol_finger(f):
   ## Tries to enroll new finger
   try:
       print('Waiting for finger...')
-      print_lcd("Put finger on")
+      print_lcd("Place finger")
 
       ## Wait that finger is read
       while ( f.readImage() == False ):
@@ -101,7 +101,8 @@ def enrol_finger(f):
       positionNumber = result[0]
 
       if ( positionNumber >= 0 ):
-          print('Template already exists at position #' + str(positionNumber))
+          print('Template already exists at position {}'.format(positionNumber))
+          print_lcd('Exists')
           return
 
       print('Remove finger...')
@@ -120,8 +121,8 @@ def enrol_finger(f):
 
       ## Compares the charbuffers
       if ( f.compareCharacteristics() == 0 ):
-          raise Exception('Fingers do not match')
-          print_lcd("Fingers mismatch")
+          print_lcd('Print mismatch')
+          return
 
       ## Creates a template
       f.createTemplate()
@@ -130,7 +131,8 @@ def enrol_finger(f):
       positionNumber = f.storeTemplate()
       print('Finger enrolled successfully!')
       print('New template position #' + str(positionNumber))
-      print_lcd("Enrolled Successfully")
+      print_lcd("Success: {}".format(positionNumber))
+      sleep(5)
 
   except Exception as e:
       print('Operation failed!')
@@ -180,7 +182,7 @@ def read_fingerprint_and_fetch(f, db_inst):
     print("Read Failed")
     return
   fetch_from_db_with_position(db_inst, position)
-  print("FOUND FINGER AT POSITION 3 {}".format(position))
+  print("FOUND FINGER AT POSITION {}".format(position))
 
 def setup():
   global fingerprint
@@ -202,6 +204,7 @@ def loop():
       print('\n================{}===============\n'.format(lastName))
       print('\n================{}===============\n'.format(registration))
       print_lcd("{} {}\n{}".format(firstName, lastName, registration))
+      time.sleep(3)
       print("Waiting for Finger....")
     else:
       print("Result is None")
@@ -209,23 +212,30 @@ def loop():
 
   sleep(0.3)
 
-setup()
-while 1:
-  loop()
-  if GPIO.input(16) == GPIO.LOW:
-    if enroll == True:
-      enroll = False
-      #proceed to enrolling students
-      print("Enroll Mode")
-      print_lcd("Enroll")
-      lcd.lcd_clear()
-      enrol_finger(fingerprint)
+try:
+  setup()
+  while 1:
+    loop()
+    if GPIO.input(16) == GPIO.LOW:
+      if enroll == True:
+        enroll = False
+        #proceed to enrolling students
+        print("Enroll Mode")
+        print_lcd("Enroll")
+        lcd.lcd_clear()
+        enrol_finger(fingerprint)
 
-    elif enroll == False:
-      enroll = True
-      print("Search Mode")
-      lcd.lcd_clear()
-      print_lcd("Enter Search Mod")
-      sleep(1)
-      #loop()
+      elif enroll == False:
+        enroll = True
+        print("Search Mode")
+        lcd.lcd_clear()
+        print_lcd("Enter Search Mode")
+        sleep(1)
+
+except KeyboardInterrupt as e:
+  GPIO.cleanup()
+  print_lcd('Not running')
+  exit()
+
+GPIO.cleanup()
 
