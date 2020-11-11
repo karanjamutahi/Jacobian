@@ -82,12 +82,13 @@ def get_user_at_position(position):
   pass
 
 def enrol_finger(f):
+  global enroll
   print('Currently used templates: ' + str(f.getTemplateCount()) +'/'+ str(f.getStorageCapacity()))
 
   ## Tries to enroll new finger
   try:
       print('Waiting for finger...')
-      print_lcd("Place finger")
+      print_lcd("Enroll finger")
 
       ## Wait that finger is read
       while ( f.readImage() == False ):
@@ -103,9 +104,11 @@ def enrol_finger(f):
       if ( positionNumber >= 0 ):
           print('Template already exists at position {}'.format(positionNumber))
           print_lcd('Exists')
+          sleep(1)
+          print_lcd('Place Finger')
+          enroll = False
           return
 
-      print('Remove finger...')
       print_lcd("Remove Finger")
       sleep(2)
 
@@ -122,6 +125,9 @@ def enrol_finger(f):
       ## Compares the charbuffers
       if ( f.compareCharacteristics() == 0 ):
           print_lcd('Print mismatch')
+          sleep(1)
+          print_lcd('Place Finger')
+          enroll = False
           return
 
       ## Creates a template
@@ -135,6 +141,7 @@ def enrol_finger(f):
       sleep(5)
       print_lcd('Search Mode')
       sleep(1)
+      enroll = False
       print_lcd('Place Finger')
 
   except Exception as e:
