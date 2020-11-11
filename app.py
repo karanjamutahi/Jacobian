@@ -164,9 +164,13 @@ while 1:
       enroll = False
       #proceed to enrolling students
       print("Enroll Mode")
+      print_lcd("Enroll")
+      lcd.lcd_clear()
 
     elif enroll == False:
       enroll = True
       print("Search Mode")
+      lcd.lcd_clear()
+      print_lcd("Enter Search Mod")
       loop()
 
