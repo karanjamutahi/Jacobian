@@ -161,6 +161,7 @@ def read_fingerprint(f):
       f.convertImage(0x01)
       result = f.searchTemplate()
       position = result[0]
+      print('Print found at position {} with accuracy {}'.format(position, result[1]))
       return position
     else:
       #print("Didn't find finger")
@@ -236,7 +237,6 @@ def loop():
       print_lcd("Print not found")
       sleep(1)
       print_lcd('Place Finger')
-
   sleep(0.3)
 
 try:
@@ -266,4 +266,3 @@ except KeyboardInterrupt as e:
   exit()
 
 GPIO.cleanup()
-
