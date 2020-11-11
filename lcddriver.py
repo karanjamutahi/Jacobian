@@ -143,8 +143,8 @@ class lcd:
            print("Jacobian")
            '''
 
-
     #clear lcd and set to home
+    
    def lcd_clear(self):
       self.lcd_write(LCD_CLEARDISPLAY)
       self.lcd_write(LCD_RETURNHOME)

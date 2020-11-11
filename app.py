@@ -28,7 +28,7 @@ enroll = True
 def print_lcd(message):
   #20X4 buffer
   #pass message to lcd_print
- # lcd.lcd_clear()
+  lcd.lcd_clear()
   lcd.lcd_print(message)
   print(message)
 
@@ -153,7 +153,7 @@ def read_fingerprint(f):
       return None
 
   except Exception as e:
-    print_lcd('Read Print: FAIL Try Again')
+    print_lcd('Read Fail')
     print(e)
     sleep(1)
 
