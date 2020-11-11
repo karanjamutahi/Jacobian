@@ -141,6 +141,10 @@ def enrol_finger(f):
       print('Operation failed!')
       print('Exception message: ' + str(e))
       print_lcd("Operation Fail")
+      sleep(1)
+      print_lcd('Search Mode')
+      sleep(1)
+      print_lcd('Place Finger')
       #exit(1)
 
 def read_fingerprint(f):
@@ -158,7 +162,8 @@ def read_fingerprint(f):
   except Exception as e:
     print_lcd('Read Fail')
     print(e)
-    sleep(1)
+    sleep(2)
+    print_lcd('Place Finger')
 
 def fetch_from_db_with_position(db_inst, position):
   query = 'SELECT * FROM students WHERE fingerprint_position = {}'.format(position)
@@ -237,6 +242,7 @@ try:
         #proceed to enrolling students
         print("Enroll Mode")
         print_lcd("Enroll")
+        sleep(2)
         lcd.lcd_clear()
         enrol_finger(fingerprint)
 
