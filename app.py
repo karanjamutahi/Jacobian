@@ -106,7 +106,7 @@ def enrol_finger(f):
 
       print('Remove finger...')
       print_lcd("Remove Finger")
-      time.sleep(2)
+      sleep(2)
 
       print('Waiting for same finger again...')
       print_lcd("Put finger again")
@@ -136,7 +136,7 @@ def enrol_finger(f):
       print('Operation failed!')
       print('Exception message: ' + str(e))
       print_lcd("Operation Fail")
-      exit(1)
+      #exit(1)
 
 def read_fingerprint(f):
   #print('Trying to read fingerprint')
