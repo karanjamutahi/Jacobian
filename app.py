@@ -133,6 +133,9 @@ def enrol_finger(f):
       print('New template position #' + str(positionNumber))
       print_lcd("Success: {}".format(positionNumber))
       sleep(5)
+      print_lcd('Search Mode')
+      sleep(1)
+      print_lcd('Place Finger')
 
   except Exception as e:
       print('Operation failed!')
