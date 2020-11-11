@@ -211,7 +211,7 @@ def loop():
 
 setup()
 while 1:
-  #loop()
+  loop()
   if GPIO.input(16) == GPIO.LOW:
     if enroll == True:
       enroll = False
@@ -226,5 +226,6 @@ while 1:
       print("Search Mode")
       lcd.lcd_clear()
       print_lcd("Enter Search Mod")
-      loop()
+      sleep(1)
+      #loop()
 
