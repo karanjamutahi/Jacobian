@@ -141,7 +141,7 @@ def enrol_finger(f):
       #exit(1)
 
 def read_fingerprint(f):
-  print('Trying to read fingerprint')
+  #print('Trying to read fingerprint')
   try:
     if (f.readImage()):
       f.convertImage(0x01)
@@ -184,15 +184,25 @@ def read_fingerprint_and_fetch(f, db_inst):
   fetch_from_db_with_position(db_inst, position)
   print("FOUND FINGER AT POSITION {}".format(position))
 
+def pretty_print(firstName, lastName, registration):
+  print('\n================{}===============\n'.format(firstName))
+  print('\n================{}===============\n'.format(lastName))
+  print('\n================{}===============\n'.format(registration))
+
+
 def setup():
   global fingerprint
   global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
   print('Waiting for finger . . .')
+  print_lcd('Place Finger')
 
 def loop():
+  #Read fingerprint
   position = read_fingerprint(fingerprint)
+
+  #If we get a valid print
   if position is not None:
     result = fetch_from_db_with_position(db_inst, position)
     if result is not None:
@@ -200,15 +210,16 @@ def loop():
       lastName = result[2]
       registration = result[3]
       print('Found at position {}'.format(position))
-      print('\n================{}===============\n'.format(firstName))
-      print('\n================{}===============\n'.format(lastName))
-      print('\n================{}===============\n'.format(registration))
+      pretty_print(firstName, lastName, registration)
       print_lcd("{} {}\n{}".format(firstName, lastName, registration))
-      time.sleep(3)
+      sleep(3)
       print("Waiting for Finger....")
     else:
+      #If we don't get a valid print
       print("Result is None")
       print_lcd("Print not found")
+      sleep(1)
+      print_lcd('Place Finger')
 
   sleep(0.3)
 
