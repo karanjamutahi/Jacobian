@@ -211,7 +211,7 @@ def loop():
 
 setup()
 while 1:
-  loop()
+  #loop()
   if GPIO.input(16) == GPIO.LOW:
     if enroll == True:
       enroll = False
@@ -220,11 +220,6 @@ while 1:
       print_lcd("Enroll")
       lcd.lcd_clear()
       enrol_finger(fingerprint)
-
-
-
-
-
 
     elif enroll == False:
       enroll = True
