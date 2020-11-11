@@ -23,6 +23,7 @@ GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 #db_active = false
 fingerprint = None
 db_inst = None
+enroll = True
 
 def print_lcd(message):
   #20X4 buffer
@@ -159,5 +160,14 @@ setup()
 while 1:
   loop()
   if GPIO.input(16) == GPIO.LOW:
+    if enroll == True:
+      enroll = False
+      #proceed to enrolling students
+      print("Enrolling students")
+
+    elif enroll == False:
+      enroll = True
+      loop()
+      
     print("Pin is active")
 
