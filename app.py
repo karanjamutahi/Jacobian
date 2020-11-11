@@ -214,6 +214,7 @@ def loop():
       print_lcd("{} {}\n{}".format(firstName, lastName, registration))
       sleep(3)
       print("Waiting for Finger....")
+      print_lcd("Place Finger")
     else:
       #If we don't get a valid print
       print("Result is None")
