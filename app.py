@@ -7,10 +7,11 @@
 
 from pyfingerprint.pyfingerprint import PyFingerprint
 import sqlite3 as db
-from time import *
 import lcddriver
-from time import sleep
+from time import sleep, time
 import RPi.GPIO as GPIO
+import requests
+
 
 lcd = lcddriver.lcd()
 lcd.lcd_clear()
@@ -32,6 +33,18 @@ def print_lcd(message):
   lcd.lcd_print(message)
   print(message)
 
+def send_print_data(result):
+  print_lcd("Updating...")
+  obj = {'fName': result[1], 'surname': result[2], 'registration': result[3], 'fingerprint_position': result[4], 'timestamp':'{}'.format(time()) }
+  res = requests.post('https://jacobianproject.herokuapp.com/addLog', json=obj)
+  print(res.text)
+  if res == 'logged!':
+    print_lcd("Success!")
+  else:
+    print(res)
+    print_lcd("Failed")
+  sleep(2)
+  print_lcd("Place Finger")
 
 def init_fingerprint_sensor():
   print_lcd('Init Fingerprint')
@@ -228,7 +241,8 @@ def loop():
       print('Found at position {}'.format(position))
       pretty_print(firstName, lastName, registration)
       print_lcd("{} {}\n{}".format(firstName, lastName, registration))
-      sleep(3)
+      sleep(2)
+      send_print_data(result)
       print("Waiting for Finger....")
       print_lcd("Place Finger")
     else:
