@@ -33,6 +33,23 @@ def print_lcd(message):
   lcd.lcd_print(message)
   print(message)
 
+def sync_db():
+  print_lcd('Syncing DB')
+  results = requests.get('https://jacobianproject.herokuapp.com/getAll')
+  results = results.json()
+  #print(results)
+  for result in results:
+    surname = result['surname']
+    fname = result['fName']
+    reg = result['registration']
+    position = result['fingerprint_position']
+    c = db_inst.cursor()
+    query = "INSERT into students(fName, surname, registration, fingerprint_position, active) VALUES ('{}','{}', '{}', {}, 1)".format(fname, surname, reg, position)
+    c.execute(query)
+  db_inst.commit()
+  c.execute('SELECT * FROM students');
+  #print(c.fetchall())
+
 def send_print_data(result):
   print_lcd("Updating...")
   obj = {'fName': result[1], 'surname': result[2], 'registration': result[3], 'fingerprint_position': result[4], 'timestamp':'{}'.format(time()) }
@@ -42,7 +59,7 @@ def send_print_data(result):
     print_lcd("Success!")
   else:
     print(res)
-    print_lcd("Failed")
+    #print_lcd("Failed")
   sleep(2)
   print_lcd("Place Finger")
 
@@ -224,6 +241,7 @@ def setup():
   global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
+  sync_db()
   print('Waiting for finger . . .')
   print_lcd('Place Finger')
 
