@@ -33,22 +33,6 @@ def print_lcd(message):
   lcd.lcd_print(message)
   print(message)
 
-def sync_db():
-  print_lcd('Syncing DB')
-  results = requests.get('https://jacobianproject.herokuapp.com/getAll')
-  results = results.json()
-  #print(results)
-  for result in results:
-    surname = result['surname']
-    fname = result['fName']
-    reg = result['registration']
-    position = result['fingerprint_position']
-    c = db_inst.cursor()
-    query = "INSERT into students(fName, surname, registration, fingerprint_position, active) VALUES ('{}','{}', '{}', {}, 1)".format(fname, surname, reg, position)
-    c.execute(query)
-  db_inst.commit()
-  c.execute('SELECT * FROM students');
-  #print(c.fetchall())
 
 def send_print_data(result):
   print_lcd("Updating...")

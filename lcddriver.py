@@ -117,20 +117,20 @@ class lcd:
       token3 = ""
       token4 = ""
 
-      token1 =  message[0:strLen]
+      token1 =  message[0:20]
       self.lcd_display_string(token1, 1)
                    
-      if strLen > 16:
+      if strLen > 20:
           #populate second token
-          token2 = message[16:strLen]
+          token2 = message[20:40]
           self.lcd_display_string(token2, 2)
           
-      if strLen > 32:
-          token3 = message[32:strLen]
+      if strLen > 40:
+          token3 = message[40:60]
           self.lcd_display_string(token3, 3)
          
-      if strLen > 48:
-          token4 = message[48:strLen]
+      if strLen > 60:
+          token4 = message[60:80]
           self.lcd_display_string(token4, 4)          
 
       #get message length
@@ -144,7 +144,25 @@ class lcd:
            '''
 
     #clear lcd and set to home
-    
+
+   def lcd_pretty_print(self, message):
+      self.lcd_clear()
+      line = 0
+
+      for index, char in enumerate(message):
+         if char == '\n':
+            line += 1
+            if line == 1:
+               self.lcd_write(0x80)
+            if line == 2:
+               self.lcd_write(0xC0)
+            if line == 3:
+               self.lcd_write(0x94)
+            if line == 4:
+               self.lcd_write(0xD4)
+         else:
+            self.lcd_write(ord(char), Rs)
+
    def lcd_clear(self):
       self.lcd_write(LCD_CLEARDISPLAY)
       self.lcd_write(LCD_RETURNHOME)
