@@ -147,7 +147,7 @@ class lcd:
 
    def lcd_pretty_print(self, message):
       self.lcd_clear()
-      line = 0
+      line = 1
 
       for index, char in enumerate(message):
          if char == '\n':
