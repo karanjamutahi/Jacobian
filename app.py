@@ -29,13 +29,14 @@ enroll = True
 def sync_db():
   print_lcd('Syncing DB')
   try:
-    res = requests.get('https://jacobianproject.herokuapp/getAll')
+    res = requests.get('https://jacobianproject.herokuapp.com/getAll')
     results = res.json()
     for result in results:
       surname = result['surname']
       fname = result['fName']
       reg = result['registration']
       position = result['fingerprint_position']
+      print('{} \t| {} \t| {} \t| {} \t|'.format(fname, surname, reg, position))
       c = db_inst.cursor()
       query = "INSERT into students(fName, surname, registration, fingerprint_position, active) VALUES ('{}','{}', '{}', {}, 1);".format(fname, surname, reg, position)
       c.execute(query)
