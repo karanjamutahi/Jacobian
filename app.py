@@ -265,7 +265,7 @@ def loop():
       registration = result[3]
       print('Found at position {}'.format(position))
       pretty_print(firstName, lastName, registration)
-      print_lcd("{} {}\n{}".format(firstName, lastName, registration))
+      lcd.lcd_pretty_print("{} {}\n{}".format(firstName, lastName, registration))
       sleep(2)
       send_print_data(result)
       print("Waiting for Finger....")
