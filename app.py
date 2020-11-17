@@ -26,6 +26,25 @@ fingerprint = None
 db_inst = None
 enroll = True
 
+def sync_db():
+  print_lcd('Syncing DB')
+  try:
+    res = requests.get('https://jacobianproject.herokuapp/getAll')
+    results = res.json()
+    for result in results:
+      surname = result['surname']
+      fname = result['fName']
+      reg = result['registration']
+      position = result['fingerprint_position']
+      c = db_inst.cursor()
+      query = "INSERT into students(fName, surname, registration, fingerprint_position, active) VALUES ('{}','{}', '{}', {}, 1);".format(fname, surname, reg, position)
+      c.execute(query)
+    db_inst.commit()
+    #c.execute('SELECT * FROM students;')
+  except Exception as e:
+    print_lcd('Sync Failed')
+    print_lcd('Place Finger')
+
 def print_lcd(message):
   #20X4 buffer
   #pass message to lcd_print
@@ -37,13 +56,16 @@ def print_lcd(message):
 def send_print_data(result):
   print_lcd("Updating...")
   obj = {'fName': result[1], 'surname': result[2], 'registration': result[3], 'fingerprint_position': result[4], 'timestamp':'{}'.format(time()) }
-  res = requests.post('https://jacobianproject.herokuapp.com/addLog', json=obj)
-  print(res.text)
-  if res == 'logged!':
-    print_lcd("Success!")
-  else:
-    print(res)
-    #print_lcd("Failed")
+  try:
+    res = requests.post('https://jacobianproject.herokuapp.com/addLog', json=obj)
+    print(res.text)
+    if res == 'logged!':
+      print_lcd("Success!")
+    else:
+      print(res)
+      #print_lcd("Failed")
+  except Exception as e:
+    print_lcd("Failed to update")
   sleep(2)
   print_lcd("Place Finger")
 
