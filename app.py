@@ -26,6 +26,13 @@ fingerprint = None
 db_inst = None
 enroll = True
 
+def boot_wait():
+  wait_time = 60
+  while wait > 0:
+    lcd.lcd_display_string('Starting: {}'.format(wait), 1)
+    sleep(1)
+    wait -= 1
+
 def sync_db():
   print_lcd('Syncing DB')
   try:
@@ -248,6 +255,7 @@ def setup():
   global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
+  boot_wait()
   sync_db()
   print('Waiting for finger . . .')
   print_lcd('Place Finger')
