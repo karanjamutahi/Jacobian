@@ -1,0 +1,14 @@
+Init Fingerprint
+Init Success
+Init DB
+Init Success
+Init Fingerprint
+Init Success
+Init DB
+Init Success
+Syncing DB
+Sync Failed
+Place Finger
+Waiting for finger . . .
+Place Finger
+Print found at position 7 with accuracy 57

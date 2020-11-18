@@ -255,7 +255,7 @@ def setup():
   global db_inst
   fingerprint = init_fingerprint_sensor()
   db_inst = init_db()
-  boot_wait()
+  #boot_wait()
   sync_db()
   print('Waiting for finger . . .')
   print_lcd('Place Finger')
@@ -311,5 +311,9 @@ except KeyboardInterrupt as e:
   GPIO.cleanup()
   print_lcd('Not running')
   exit()
+
+except Exception as e:
+  print_lcd('Not running')
+  GPIO.cleanup()
 
 GPIO.cleanup()
